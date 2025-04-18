@@ -5,13 +5,6 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
@@ -20,7 +13,66 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-[var(--background)] text-[var(--foreground)] font-sans;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Fondo animado con luces */
+.lights-bg {
+  @apply fixed top-0 left-0 w-full h-full -z-10 pointer-events-none overflow-hidden;
+}
+
+.light {
+  @apply absolute rounded-full opacity-40;
+  filter: blur(100px);
+  animation: float 12s ease-in-out infinite alternate;
+}
+
+.light:nth-child(1) {
+  background: #ff5f6d;
+  width: 400px;
+  height: 400px;
+  top: 10%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.light:nth-child(2) {
+  background: #ffc371;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 70%;
+  animation-delay: 2s;
+}
+
+.light:nth-child(3) {
+  background: #7f00ff;
+  width: 350px;
+  height: 350px;
+  top: 80%;
+  left: 30%;
+  animation-delay: 4s;
+}
+
+.light:nth-child(4) {
+  background: #32cd32; /* verde lima */
+  width: 320px;
+  height: 320px;
+  top: 30%;
+  left: 40%;
+  animation-delay: 6s;
+}
+
+@keyframes float {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(50px, -40px) scale(1.05);
+  }
+  100% {
+    transform: translate(-30px, 60px) scale(1);
+  }
 }
