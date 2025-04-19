@@ -1,4 +1,4 @@
-import { Pokemon } from "@/pokemons";
+import { Pokemon, PokemonsResponse } from "@/pokemons";
 import { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -15,14 +15,22 @@ interface SpriteCardProps {
   glowColor?: "default" | "gold";
 }
 
-const getPokemon = async (id: string): Promise<Pokemon> => {
+export async function generateStaticParams() {
+  const data: PokemonsResponse = await fetch(
+    `https://pokeapi.co/api/v2/pokemon?limit=444`
+  ).then((res) => res.json());
+
+  return data.results.map((pokemon) => ({
+    name: pokemon.name, 
+  }));
+}
+
+const getPokemon = async (name: string): Promise<Pokemon> => {
   try {
-    const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
-      cache: "force-cache",
+    const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`, {
+      // cache: "force-cache",
       next: { revalidate: 60 * 60 * 30 * 6 },
     }).then((res) => res.json());
-
-    console.log("data", data);
 
     return data;
   } catch {
@@ -33,17 +41,17 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ name: string }>;
 }): Promise<Metadata> {
   try {
     const awaitedParams = await params;
-    const pokemon = await getPokemon(awaitedParams.id);
+    const pokemon = await getPokemon(awaitedParams.name);
 
     return {
-      title: `${pokemon.id} - ${pokemon.name}`,
+      title: `Pokemon ${pokemon.name}`,
       description: `Página del Pokémon ${pokemon.name}`,
     };
-  } catch{
+  } catch {
     return {
       title: "Error",
       description: "No se pudo cargar el Pokémon",
@@ -51,14 +59,21 @@ export async function generateMetadata({
   }
 }
 
-function SpriteCard({ src, alt, hoverEffect, glowColor = "default" }: SpriteCardProps) {
+function SpriteCard({
+  src,
+  alt,
+  hoverEffect,
+  glowColor = "default",
+}: SpriteCardProps) {
   const glowClass =
     glowColor === "gold"
       ? "drop-shadow-[0_0_8px_rgba(255,215,0,0.7)]"
       : "drop-shadow-[0_0_8px_rgba(100,200,255,0.5)]";
 
   return (
-    <div className={`relative ${hoverEffect} transition-transform duration-300`}>
+    <div
+      className={`relative ${hoverEffect} transition-transform duration-300`}
+    >
       <div
         className={`absolute inset-0 rounded-full ${
           glowColor === "gold" ? "bg-yellow-500/20" : "bg-blue-400/20"
@@ -78,10 +93,10 @@ function SpriteCard({ src, alt, hoverEffect, glowColor = "default" }: SpriteCard
 export default async function Page({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ name: string }>;
 }) {
   const awaitedParams = await params;
-  const pokemon = await getPokemon(awaitedParams.id);
+  const pokemon = await getPokemon(awaitedParams.name);
 
   return (
     <div className="flex flex-col bg-gray-900 min-h-screen p-6 items-center">

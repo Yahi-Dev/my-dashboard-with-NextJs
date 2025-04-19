@@ -38,7 +38,7 @@ export const PokemonCard = ({ pokemon }: Props) => {
         {/* Botón de explorar */}
         <div className="p-4 bg-gray-800 border-b-2 border-gray-700">
           <Link
-            href={`/dashboard/pokemon/${id}`}
+            href={`/dashboard/pokemons/${name}`}
             className="block w-full border-2 border-yellow-400 rounded-full py-2 px-4 text-sm font-semibold text-yellow-400 hover:bg-yellow-400 hover:text-gray-900 transition-colors duration-300 text-center"
           >
             Explorar Pokémon
