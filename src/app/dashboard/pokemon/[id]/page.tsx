@@ -9,6 +9,16 @@ interface Props {
     };
 }
 
+const getPokemon = async (id: string): Promise<Pokemon> => {
+    const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {// Revalidar cada 60 segundos
+        // cache: 'force-cache', //TODO: cambiar esto en un futuro
+        next: { revalidate: 60 * 60 * 30 * 6 }
+    })
+    .then(res => res.json());
+    
+    return data;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const {id, name} = await getPokemon(params.id);
@@ -20,17 +30,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 
-const getPokemon = async (id: string): Promise<Pokemon> => {
-    const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {// Revalidar cada 60 segundos
-        // cache: 'force-cache', //TODO: cambiar esto en un futuro
-        next: {
-            revalidate: 60 * 60 * 30 * 6,
-        },
-    })
-    .then(res => res.json());
-    
-    return data;
-}
 
 
 
