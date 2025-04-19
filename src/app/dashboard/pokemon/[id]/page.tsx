@@ -8,6 +8,13 @@ import { notFound } from "next/navigation";
 //   searchParams?: Record<string, string | string[] | undefined>;
 // }
 
+interface SpriteCardProps {
+  src: string;
+  alt: string;
+  hoverEffect: string;
+  glowColor?: "default" | "gold";
+}
+
 const getPokemon = async (id: string): Promise<Pokemon> => {
   try {
     const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, {
@@ -18,7 +25,7 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
     console.log("data", data);
 
     return data;
-  } catch (error) {
+  } catch {
     notFound();
   }
 };
@@ -36,7 +43,7 @@ export async function generateMetadata({
       title: `${pokemon.id} - ${pokemon.name}`,
       description: `Página del Pokémon ${pokemon.name}`,
     };
-  } catch (error) {
+  } catch{
     return {
       title: "Error",
       description: "No se pudo cargar el Pokémon",
@@ -44,16 +51,14 @@ export async function generateMetadata({
   }
 }
 
-function SpriteCard({ src, alt, hoverEffect, glowColor = "default" }) {
+function SpriteCard({ src, alt, hoverEffect, glowColor = "default" }: SpriteCardProps) {
   const glowClass =
     glowColor === "gold"
       ? "drop-shadow-[0_0_8px_rgba(255,215,0,0.7)]"
       : "drop-shadow-[0_0_8px_rgba(100,200,255,0.5)]";
 
   return (
-    <div
-      className={`relative ${hoverEffect} transition-transform duration-300`}
-    >
+    <div className={`relative ${hoverEffect} transition-transform duration-300`}>
       <div
         className={`absolute inset-0 rounded-full ${
           glowColor === "gold" ? "bg-yellow-500/20" : "bg-blue-400/20"
