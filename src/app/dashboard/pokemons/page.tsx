@@ -1,4 +1,4 @@
-import { PokemonGrid, PokemonsResponse, SimplePokemon } from "@/app/pokemons";
+import { PokemonGrid, PokemonsResponse, SimplePokemon } from "@/pokemons";
 
 const getPokemon = async(limit = 20, offset = 0): Promise<SimplePokemon[]> => {
   const data: PokemonsResponse = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
@@ -8,6 +8,9 @@ const getPokemon = async(limit = 20, offset = 0): Promise<SimplePokemon[]> => {
     id: pokemon.url.split('/').at(-2)!,
     name: pokemon.name,
   }))
+
+  // throw new Error('Error en la API de Pokemon'); // Simulando un error en la API
+  // throw notFound();
 
   return pokemons;
 }
