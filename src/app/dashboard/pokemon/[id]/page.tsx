@@ -19,14 +19,13 @@ const getPokemon = async (id: string): Promise<Pokemon> => {
     return data;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const { id, name } = await getPokemon(params.id);
 
-    const {id, name} = await getPokemon(params.id);
-
-    return {
-        title: `${id } - ${name}`,
-        description: `Pagina del Pokemon ${ name }`,
-    }
+  return {
+    title: `${id} - ${name}`,
+    description: `Pagina del Pokemon ${name}`,
+  };
 }
 
 
