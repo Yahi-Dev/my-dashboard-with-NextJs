@@ -6,11 +6,14 @@ export const metadata = {
 };
 
 export default function CounterPage() {
-
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
-      <span>Productos en el carrito</span>
-      <CartCounter value={20}/>
+    <div className="flex flex-col items-center justify-center w-full h-full bg-gradient-to-br from-indigo-50 to-purple-100 p-8 rounded-3xl shadow-lg border border-gray-200">
+      <span className="text-2xl font-bold text-gray-800 mb-6 tracking-wider uppercase">
+        🛒 Productos en el carrito
+      </span>
+      <div className="bg-white p-8 rounded-2xl shadow-inner border border-gray-100">
+        <CartCounter value={20} />
+      </div>
     </div>
   );
 }
