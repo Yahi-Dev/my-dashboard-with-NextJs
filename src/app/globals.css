@@ -76,3 +76,23 @@ body {
     transform: translate(-30px, 60px) scale(1);
   }
 }
+
+
+@keyframes aura {
+  0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(255, 87, 34, 0.8); }
+  100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+}
+
+.hover-aura:hover {
+  animation: aura 2s infinite;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  text-stroke: 1px rgba(255, 255, 255, 0.2);
+}
+
+.animate-pulse-slow {
+  animation: pulse 6s infinite;
+}
