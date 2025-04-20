@@ -19,9 +19,12 @@ const getApiCounter = async():Promise<counterResponse> =>{
   return data; 
 }
 
-export const CartCounter = ({ value = 10 }: Props) => {
+  export const CartCounter = ({ value = 10 }: Props) => {
+
   const count = useAppSelector(state => state.counter.count);
   const dispatch = useAppDispatch();
+
+  console.log(value);
 
   useEffect(() => {
     getApiCounter()
