@@ -1,3 +1,4 @@
+export { WidgetPokemonGrid } from './components/WidgetPokemonGrid';
 
 export { PokemonGrid } from './components/PokemonGrid';
 

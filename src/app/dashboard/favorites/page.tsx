@@ -1,4 +1,4 @@
-import { PokemonGrid, PokemonsResponse, SimplePokemon } from "@/pokemons";
+import { WidgetPokemonGrid } from "@/pokemons"
 
 export const metadata = {
     title: 'Favoritos',
@@ -8,6 +8,7 @@ export const metadata = {
 
 export default async function PokemonsPage() {
 
+  
 
   return (
     <div className="flex flex-col bg-gray-900 min-h-screen p-6">
@@ -21,12 +22,7 @@ export default async function PokemonsPage() {
           </span>
         </div>
 
-        <div className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500 rounded-xl opacity-75 group-hover:opacity-100 transition duration-500 blur-lg"></div>
-          <div className="relative bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700">
-            <PokemonGrid pokemons={[]} />
-          </div>
-        </div>
+        <WidgetPokemonGrid/>
 
         <div className="mt-6 flex justify-end">
           <p className="text-gray-400 font-mono text-sm">

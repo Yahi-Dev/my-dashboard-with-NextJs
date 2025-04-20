@@ -1,7 +1,12 @@
+'use client'
+
 import Link from "next/link";
 import { SimplePokemon } from "../interfaces/simple-pokemons";
 import Image from "next/image";
-import { IoHeartOutline } from "react-icons/io5";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useAppSelector } from "@/store";
+import { useDispatch } from "react-redux";
+import { toggleFavorite } from "@/store/pokemons/pokemons";
 
 interface Props {
   pokemon: SimplePokemon;
@@ -9,6 +14,13 @@ interface Props {
 
 export const PokemonCard = ({ pokemon }: Props) => {
   const { id, name } = pokemon;
+
+  const isFavorite = useAppSelector(state => !!state.pokemons[id] )
+  const dispatch = useDispatch();
+
+  const onToggle = () => {
+    dispatch(toggleFavorite(pokemon));
+  }
 
   return (
     <div className="mx-auto right-0 mt-2 w-64">
@@ -47,17 +59,28 @@ export const PokemonCard = ({ pokemon }: Props) => {
 
         {/* Sección de favoritos */}
         <div className="bg-gray-800 p-4 hover:bg-gray-700 transition-colors duration-300">
-          <Link href="/dashboard/main" className="flex items-center">
+          <div onClick={ onToggle }
+          className="flex items-center cursor-pointer">
             <div className="text-red-500 hover:text-red-400 transition-colors">
-              <IoHeartOutline className="w-5 h-5" />
+              {
+                isFavorite 
+                ?
+                 (<IoHeart className="w-5 h-5" />)
+                :
+                (<IoHeartOutline className="w-5 h-5" />)
+              }
             </div>
             <div className="pl-3">
               <p className="text-sm font-medium text-gray-300 leading-none">
-                No es favorito
+                {
+                  isFavorite
+                  ? 'Es favorito'
+                  : 'No es favorito'
+                }
               </p>
-              <p className="text-xs text-gray-400">Añadir a favoritos</p>
+              <p className="text-xs text-gray-400">Card Pokemon</p>
             </div>
-          </Link>
+          </div>
         </div>
       </div>
     </div>
