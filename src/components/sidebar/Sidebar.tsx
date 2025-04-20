@@ -1,25 +1,31 @@
 import Image from "next/image";
-import { IoBrowsersOutline, IoCalculatorOutline, IoFootball, IoLogoReact } from "react-icons/io5";
+import { IoBrowsersOutline, IoCalculatorOutline, IoFootball, IoHeart, IoLogoReact } from "react-icons/io5";
 import SiderbarMenuItems from "./SiderbarMenuItems";
 
 const menuItems = [
   {
     path: "/dashboard/main",
-    icon: <IoBrowsersOutline />,
+    icon: <IoBrowsersOutline size={20} />,
     title: "Dashboard",
     subtitle: "Visualizacion",
   },
   {
     path: "/dashboard/counter",
-    icon: <IoCalculatorOutline />,
+    icon: <IoCalculatorOutline size={20} />,
     title: "Counter",
     subtitle: "Contador Client Side",
   },
   {
     path: "/dashboard/pokemons",
-    icon: <IoFootball />,
+    icon: <IoFootball size={20} />,
     title: "Pokemons",
     subtitle: "Generacion estatica",
+  },
+  {
+    path: "/dashboard/favorites",
+    icon: <IoHeart size={20} />,
+    title: "Favorites",
+    subtitle: "Pokemons Favoritos",
   },
 ];
 
